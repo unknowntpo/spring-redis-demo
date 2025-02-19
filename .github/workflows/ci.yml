@@ -28,6 +28,12 @@ jobs:
           distribution: "temurin"
           cache: "gradle"
 
+      # Cache Gradle dependencies and wrapper
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
+
       - name: Set up Gradle wrapper
         run: gradle wrapper
 
@@ -59,6 +65,12 @@ jobs:
           distribution: "temurin"
           cache: "gradle"
 
+      # Cache Gradle dependencies and wrapper
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
+
       - name: Set up Gradle wrapper
         run: gradle wrapper
 
@@ -78,6 +90,12 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: "gradle"
+
+      # Cache Gradle dependencies and wrapper
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
 
       - name: Set up Gradle wrapper
         run: gradle wrapper
