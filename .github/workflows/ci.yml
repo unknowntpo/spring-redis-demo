@@ -88,7 +88,7 @@ jobs:
 
       # Start Docker containers
       - name: Start Docker containers
-        run: docker-compose up -d
+        run: docker compose up -d
 
       # Wait for containers to be ready (optional but recommended)
       - name: Wait for containers to be ready
@@ -101,7 +101,7 @@ jobs:
       # Clean up Docker containers
       - name: Stop Docker containers
         if: always() # This ensures cleanup happens even if tests fail
-        run: docker-compose down
+        run: docker compose down
 
   dependency-submission:
     runs-on: ubuntu-latest
