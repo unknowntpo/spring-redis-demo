@@ -77,7 +77,7 @@ jobs:
       - name: Test with Gradle
         run: ./gradlew test -PexcludeTags=integration,e2e
 
-  test-integration:
+  test-integration-and-e2e:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -115,6 +115,59 @@ jobs:
 
       - name: Test with Gradle
         run: ./gradlew test -PexcludeTags=integration,e2e
+
+      # Clean up Docker containers
+      - name: Stop Docker containers
+        if: always() # This ensures cleanup happens even if tests fail
+        run: docker compose down
+
+  load-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: "17"
+          distribution: "temurin"
+          cache: "gradle"
+
+      # Cache Gradle dependencies and wrapper
+      - name: Setup Gradle Cache
+        uses: gradle/gradle-build-action@v2
+        with:
+          gradle-home-cache-cleanup: true
+
+      - name: Set up Gradle wrapper
+        run: gradle wrapper
+
+      # Install k6
+      - name: Install k6
+        run: |
+          curl -L https://github.com/grafana/k6/releases/download/v0.47.0/k6-v0.47.0-linux-amd64.tar.gz -o k6.tar.gz
+          tar -xzf k6.tar.gz
+          sudo cp k6-v0.47.0-linux-amd64/k6 /usr/local/bin/
+
+      # Set up Docker Compose
+      - name: Set up Docker Compose
+        uses: docker/setup-buildx-action@v3
+
+      # Start Docker containers and Spring Boot app
+      - name: Start Docker containers
+        run: docker compose up -d
+
+      # Wait for containers and app to be ready
+      - name: Wait for services to be ready
+        run: |
+          echo "Waiting for application to start..."
+          timeout 60s bash -c 'while [[ "$(curl -s -o /dev/null -w ''%{http_code}'' localhost:8080/healthz)" != "200" ]]; do sleep 2; done' || exit 1
+          echo "Application is up!"
+
+      - name: Run k6 load test
+        run: k6 run load-test-healthz.js
 
       # Clean up Docker containers
       - name: Stop Docker containers
