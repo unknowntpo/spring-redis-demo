@@ -28,6 +28,9 @@ jobs:
           distribution: "temurin"
           cache: "gradle"
 
+      - name: Set up Gradle wrapper
+        run: gradle wrapper
+
       - name: Build with Gradle Wrapper
         run: ./gradlew build
 
@@ -56,6 +59,9 @@ jobs:
           distribution: "temurin"
           cache: "gradle"
 
+      - name: Set up Gradle wrapper
+        run: gradle wrapper
+
       - name: Test with Gradle
         run: ./gradlew test
 
@@ -72,6 +78,10 @@ jobs:
           java-version: "17"
           distribution: "temurin"
           cache: "gradle"
+
+      - name: Set up Gradle wrapper
+        run: gradle wrapper
+
       # Generates and submits a dependency graph, enabling Dependabot Alerts for all project dependencies.
       # See: https://github.com/gradle/actions/blob/main/dependency-submission/README.md
       - name: Generate and submit dependency graph
