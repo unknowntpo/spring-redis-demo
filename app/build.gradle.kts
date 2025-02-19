@@ -66,5 +66,9 @@ tasks.named<Test>("test") {
         project.findProperty("excludeTags")?.toString()?.split(",")?.let { tags ->
             excludeTags(*tags.toTypedArray())
         }
+		// Handle include tags
+        project.findProperty("includeTags")?.toString()?.split(",")?.let { tags ->
+            includeTags(*tags.toTypedArray())
+        }
     }
 }
