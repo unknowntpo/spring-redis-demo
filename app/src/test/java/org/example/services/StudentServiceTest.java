@@ -16,6 +16,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
+import java.util.Optional;
+
 @ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
     @Mock
@@ -41,7 +43,7 @@ class StudentServiceTest {
         Student mockStudent = new Student();
         mockStudent.setId(studentId);
         mockStudent.setName(name);
-        when(studentRepository.getById(studentId)).thenReturn(mockStudent);
+        when(studentRepository.findById(studentId)).thenReturn(Optional.of(mockStudent));
         when(studentRedisRepository.save(mockStudent)).thenReturn(mockStudent);
 
         StudentDTO mockStudentDto = new StudentDTO(name);

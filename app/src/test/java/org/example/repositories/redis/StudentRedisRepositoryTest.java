@@ -6,6 +6,7 @@ import org.example.dtos.StudentDTO;
 import org.example.entities.Student;
 import org.example.mappers.StudentMapper;
 import org.junit.jupiter.api.Nested;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -15,6 +16,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 
 @SpringBootTest
+@Tag("integration")
 class StudentRedisRepositoryTest {
     @Autowired
     private StudentRedisRepository repo;

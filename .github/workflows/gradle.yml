@@ -45,7 +45,7 @@ jobs:
     # - name: Build with Gradle 8.9
     #   run: gradle build
 
-  test:
+  test-unit:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -63,7 +63,7 @@ jobs:
         run: gradle wrapper
 
       - name: Test with Gradle
-        run: ./gradlew test
+        run: ./gradlew test -PexcludeTags=integration,e2e
 
   dependency-submission:
     runs-on: ubuntu-latest

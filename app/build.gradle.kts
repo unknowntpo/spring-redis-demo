@@ -62,5 +62,9 @@ application {
 
 tasks.named<Test>("test") {
     // Use JUnit Platform for unit tests.
-    useJUnitPlatform()
+    useJUnitPlatform {
+        project.findProperty("excludeTags")?.toString()?.split(",")?.let { tags ->
+            excludeTags(*tags.toTypedArray())
+        }
+    }
 }
