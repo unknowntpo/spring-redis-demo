@@ -20,6 +20,6 @@ WORKDIR /app
 
 # Copy the built artifact from the build stage
 COPY --from=build /project/app/build/libs/*.jar app.jar
-
+COPY --from=build /project/app/src/main/resources/application.properties application.properties
 # Set the startup command to execute the jar
-ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+ENTRYPOINT ["java", "-jar", "/app/app.jar", "--spring.config.location=/app/application.properties"]
