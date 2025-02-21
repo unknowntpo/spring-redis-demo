@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -21,9 +22,9 @@ public class StudentController {
     private StudentService studentService;
 
     @GetMapping("/{studentId}")
-    public ResponseEntity<StudentDTO> getById(@PathVariable Integer studentId) {
-        StudentDTO studentDto = studentService.getById(studentId);
-       return ResponseEntity.ok(studentDto);
+    public ResponseEntity<StudentDTO> getById(@PathVariable Integer studentId, @RequestParam(name = "cache", required = false, defaultValue = "true") boolean useCache) {
+        StudentDTO studentDto = studentService.getById(studentId, useCache);
+        return ResponseEntity.ok(studentDto);
     }
 
     @PostMapping({"", "/"})

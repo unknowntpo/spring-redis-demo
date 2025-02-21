@@ -29,9 +29,10 @@ public class StudentService {
     private static final Logger logger
             = LoggerFactory.getLogger(StudentService.class);
 
-    public StudentDTO getById(Integer studentId) {
+    public StudentDTO getById(Integer studentId, boolean useCache) {
         logger.info("getting student by id: {}, toString: {}", studentId, studentId.toString());
-        if (studentRedisRepository.existsById(studentId)) {
+
+        if (useCache && studentRedisRepository.existsById(studentId)) {
             Student student = studentRedisRepository.getById(studentId);
             logger.info("got student in redis: {}", student);
             StudentDTO dto = studentMapper.toDto(student);

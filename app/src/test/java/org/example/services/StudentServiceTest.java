@@ -49,7 +49,7 @@ class StudentServiceTest {
         StudentDTO mockStudentDto = new StudentDTO(name);
         mockStudentDto.setId(studentId);
 
-        assertEquals(mockStudentDto, studentService.getById(studentId));
+        assertEquals(mockStudentDto, studentService.getById(studentId, false));
     }
 
     @Test
