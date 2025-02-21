@@ -7,6 +7,9 @@ app/build/
 # Log file
 *.log
 
+# k6
+./k6/*
+
 # BlueJ files
 *.ctxt
 
