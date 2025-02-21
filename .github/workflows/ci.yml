@@ -176,7 +176,6 @@ jobs:
 
       # Upload test results
       - name: Upload test results
-        run: mkdir -p k6
         uses: actions/upload-artifact@v4
         with:
           path: ./k6
