@@ -46,6 +46,10 @@ dependencies {
 
     // This dependency is used by the application.
     implementation(libs.guava)
+
+    // JMH dependencies
+    testImplementation("org.openjdk.jmh:jmh-core:1.37")
+    testAnnotationProcessor("org.openjdk.jmh:jmh-generator-annprocess:1.37")
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -71,4 +75,22 @@ tasks.named<Test>("test") {
             includeTags(*tags.toTypedArray())
         }
     }
+}
+
+tasks.register<JavaExec>("runBenchmark") {
+    description = "Runs JMH benchmark"
+    mainClass.set("org.example.benchmarks.StudentEndpointBenchmark")
+    classpath = sourceSets["test"].runtimeClasspath
+    
+    // Default JVM args
+    jvmArgs = listOf(
+        "-XX:+UnlockDiagnosticVMOptions",
+        "-XX:+DebugNonSafepoints",
+        "-Xrunjdwp:none"
+    )
+    
+    // Pass through system properties
+    systemProperties(System.getProperties().map { 
+        it.key.toString() to it.value.toString() 
+    }.toMap())
 }
